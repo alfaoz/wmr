@@ -531,6 +531,14 @@
             transition: all 0.3s ease;
         }
 
+        .day-break.short {
+            color: #666;
+            background: #0a0a0a;
+            border: 1px dotted #1a2a1a;
+            opacity: 0.8;
+            font-size: 0.75rem;
+        }
+
         .status-message.loading {
             background: #1a0a0a;
             color: #ffaa00;
@@ -837,7 +845,7 @@
             }
             return new Date(dateStr);
         }
-        
+
         function analyzePatterns(events) {
             const patterns = {
                 byTimeSlot: {},
@@ -854,10 +862,10 @@
                     dateRange: { start: null, end: null }
                 }
             };
-            
+
             events.forEach(event => {
                 if (!event.start) return;
-                
+
                 // Update stats
                 patterns.stats.uniqueNames.add(event.summary || 'Untitled');
                 if (event.location) patterns.stats.uniqueLocations.add(event.location);
@@ -868,7 +876,7 @@
                 if (!patterns.stats.dateRange.end || event.start > patterns.stats.dateRange.end) {
                     patterns.stats.dateRange.end = event.start;
                 }
-                
+
                 // Analyze by day and time
                 const day = event.start.toLocaleDateString('en-GB', { weekday: 'long' });
                 const time = event.start.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
@@ -878,20 +886,20 @@
                     patterns.byDayTime[dayTimeKey] = [];
                 }
                 patterns.byDayTime[dayTimeKey].push(event);
-                
+
                 // Analyze by time slot only
                 if (!patterns.byTimeSlot[time]) {
                     patterns.byTimeSlot[time] = [];
                 }
                 patterns.byTimeSlot[time].push(event);
-                
+
                 // Analyze by exact name
                 const className = event.summary || 'Untitled';
                 if (!patterns.byName[className]) {
                     patterns.byName[className] = [];
                 }
                 patterns.byName[className].push(event);
-                
+
                 // Keep the old weekly patterns for compatibility
                 if (!patterns.weeklyPatterns[className]) {
                     patterns.weeklyPatterns[className] = {
@@ -913,13 +921,13 @@
                     }
                     patterns.byLocation[event.location].push(event);
                 }
-                
+
                 // Check for RRULE (recurring events)
                 if (event.rrule) {
                     patterns.recurring.push(event);
                 }
             });
-            
+
             // NEW: Analyze smart patterns - actual weekly recurring patterns
             patterns.smartPatterns = analyzeSmartWeeklyPatterns(events);
 
@@ -1187,13 +1195,20 @@
             const firstEventTime = firstEvent.start.getHours() * 60 + firstEvent.start.getMinutes();
             if (firstEventTime > 10 * 60) { // After 10:00 AM
                 const breakStart = Math.max(9 * 60, firstEventTime - 90); // Start at 9 AM or 1.5h before
-                breaks.push({
-                    start: Math.floor(breakStart / 60),
-                    startMin: breakStart % 60,
-                    end: Math.floor((firstEventTime - 15) / 60),
-                    endMin: (firstEventTime - 15) % 60,
-                    type: 'morning break'
-                });
+                const breakEnd = firstEventTime - 15; // 15 min before first event
+                const duration = Math.max(0, breakEnd - breakStart); // Calculate duration in minutes
+
+                if (duration >= 10) { // Show breaks of 10+ minutes
+                    breaks.push({
+                        start: Math.floor(breakStart / 60),
+                        startMin: breakStart % 60,
+                        end: Math.floor(breakEnd / 60),
+                        endMin: breakEnd % 60,
+                        type: 'morning break',
+                        duration: Math.floor(duration),
+                        isShort: duration < 30
+                    });
+                }
             }
 
             // Check gaps between events (lunch opportunities)
@@ -1203,19 +1218,19 @@
 
                 const gapMinutes = (nextStart - currentEnd) / (1000 * 60);
 
-                if (gapMinutes >= 45) { // At least 45 minutes for a meaningful break
+                if (gapMinutes >= 15) { // Show breaks of 15+ minutes
                     const breakStartTime = new Date(currentEnd.getTime() + 10 * 60 * 1000); // 10 min after previous event
                     const breakEndTime = new Date(nextStart.getTime() - 10 * 60 * 1000); // 10 min before next event
 
                     const breakDuration = (breakEndTime - breakStartTime) / (1000 * 60);
-                    if (breakDuration >= 30) {
+                    if (breakDuration >= 10) {
                         const startHour = breakStartTime.getHours();
                         const startMin = breakStartTime.getMinutes();
                         const endHour = breakEndTime.getHours();
                         const endMin = breakEndTime.getMinutes();
 
                         let breakType = 'break';
-                        if (startHour >= 11 && startHour <= 14) {
+                        if (startHour >= 11 && startHour <= 14 && breakDuration >= 30) {
                             breakType = 'lunch';
                         } else if (startHour >= 15 && startHour <= 17) {
                             breakType = 'afternoon break';
@@ -1227,7 +1242,8 @@
                             end: endHour,
                             endMin: endMin,
                             type: breakType,
-                            duration: Math.floor(breakDuration)
+                            duration: Math.floor(breakDuration),
+                            isShort: breakDuration < 30
                         });
                     }
                 }
@@ -1239,18 +1255,24 @@
             const lastEventTime = lastEventEnd.getHours() * 60 + lastEventEnd.getMinutes();
             if (lastEventTime < 18 * 60) { // Before 6:00 PM
                 const breakStart = lastEventTime + 10; // 10 min after last event
-                breaks.push({
-                    start: Math.floor(breakStart / 60),
-                    startMin: breakStart % 60,
-                    end: 18,
-                    endMin: 0,
-                    type: 'evening break'
-                });
+                const breakEnd = 18 * 60; // Until 6:00 PM
+                const duration = breakEnd - breakStart;
+
+                if (duration >= 10) { // Show breaks of 10+ minutes
+                    breaks.push({
+                        start: Math.floor(breakStart / 60),
+                        startMin: breakStart % 60,
+                        end: 18,
+                        endMin: 0,
+                        type: 'evening break',
+                        duration: Math.floor(duration),
+                        isShort: duration < 30
+                    });
+                }
             }
 
             return breaks;
         }
-
         function getCurrentEventStatus(dayEvents) {
             if (!dayEvents || dayEvents.length === 0) return null;
 
@@ -1451,50 +1473,48 @@
                                 </div>
                             </div>
                             <div class="day-events">
-                                ${events.map(event => {
-                                    let eventClass = 'day-event';
-                                    let indicator = '';
+    ${events.map(event => {
+                        let eventClass = 'day-event';
+                        let indicator = '';
 
-                                    // Check for exam events and add exam class
-                                    if (isExamEvent(event)) {
-                                        eventClass += ' exam';
-                                    }
+                        // Check for exam events and add exam class
+                        if (isExamEvent(event)) {
+                            eventClass += ' exam';
+                        }
 
-                                    if (isToday && currentEventStatus) {
-                                        if (currentEventStatus.event === event) {
-                                            eventClass += ` ${currentEventStatus.status}`;
-                                            indicator = `<span class="event-indicator">${currentEventStatus.indicator}</span>`;
+                        if (isToday && currentEventStatus) {
+                            if (currentEventStatus.event === event) {
+                                eventClass += ` ${currentEventStatus.status}`;
+                                indicator = `<span class="event-indicator">${currentEventStatus.indicator}</span>`;
 
-                                            if( currentEventStatus.minutesUntil) {
-                                                indicator += ` <span style="font-size: 0.7rem; color: #ffaa00;">(in ${currentEventStatus.minutesUntil}min)</span>`;
-                                            }
-                                        }
-                                    }
+                                if( currentEventStatus.minutesUntil) {
+                                    indicator += ` <span style="font-size: 0.7rem; color: #ffaa00;">(in ${currentEventStatus.minutesUntil}min)</span>`;
+                                }
+                            }
+                        }
 
-                                    return `
-                                        <div class="${eventClass}">
-                                            ${indicator}
-                                            <span class="event-time">${event.start.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false })}${event.end ? ' - ' + event.end.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}</span>
-                                            ${event.summary || 'Untitled'}
-                                            ${event.location ? ` @ ${event.location}` : ''}
-                                        </div>
-                                    `;
-                                }).join('')}
+                        return `
+            <div class="${eventClass}">
+                ${indicator}
+                <span class="event-time">${event.start.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false })}${event.end ? ' - ' + event.end.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}</span>
+                ${event.summary || 'Untitled'}
+                ${event.location ? ` @ ${event.location}` : ''}
+            </div>
+        `;
+                    }).join('')}
 
-                                ${dayBreaks.length > 0 ? dayBreaks.map(breakSlot => {
-                                    const startTime = `${String(breakSlot.start).padStart(2, '0')}:${String(breakSlot.startMin).padStart(2, '0')}`;
-                                    const endTime = `${String(breakSlot.end).padStart(2, '0')}:${String(breakSlot.endMin).padStart(2, '0')}`;
-
-                                    return `
-                                        <div class="day-break">
-                                            <span class="break-type">${breakSlot.type}</span> available
-                                            <span class="break-time">${startTime}</span> until
-                                            <span class="break-time">${endTime}</span>
-                                            ${breakSlot.duration ? ` (${breakSlot.duration}min)` : ''}
-                                        </div>
-                                    `;
-                                }).join('') : ''}
-                            </div>
+    ${dayBreaks.map(b => {
+                        const startTime = `${b.start}:${b.startMin.toString().padStart(2, '0')}`;
+                        const endTime = `${b.end}:${b.endMin.toString().padStart(2, '0')}`;
+                        return `
+            <div class="day-break${b.isShort ? ' short' : ''}">
+                <span class="break-time">${startTime} - ${endTime}</span>
+                <span class="break-type">${b.type}</span>
+                (${b.duration} min)
+            </div>
+        `;
+                    }).join('')}
+</div>
                         </div>
                     `;
                 }).join('');
