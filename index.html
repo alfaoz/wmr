@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+    <script src="https://cdn.counter.dev/script.js" data-id="ad78a2da-30a4-45d5-b433-ebc0ee739447" data-utcoffset="2"></script>I     <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>wmr?</title>
@@ -239,7 +239,7 @@
 
         .day-event.upcoming {
             color: #ffaa00;
-            background: #1a1a0a;
+            background: #1a0a0a;
             padding: 6px;
             margin: 2px 0;
             border-left: 2px solid #ffaa00;
@@ -695,6 +695,340 @@
             font-size: 0.75rem;
             font-weight: bold;
         }
+
+        /* Mobile-friendly responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                padding-bottom: 80px; /* Increased padding for mobile controls */
+            }
+
+            .header h1 {
+                font-size: 1.3rem; /* Slightly smaller */
+                margin-bottom: 8px;
+                letter-spacing: 1px; /* Reduced letter spacing */
+            }
+
+            .header p {
+                font-size: 0.75rem; /* Smaller subtitle */
+            }
+
+            .upload-section {
+                padding: 15px 12px; /* Reduced padding */
+                margin-bottom: 15px;
+            }
+
+            .next-week-section {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+
+            .pattern-card {
+                padding: 12px; /* Reduced padding */
+                margin-bottom: 15px;
+            }
+
+            /* Mobile control bar - always visible and persistent */
+            .mobile-controls {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                display: flex !important; /* Force display on mobile */
+                justify-content: space-between;
+                align-items: center;
+                background: #151515;
+                border: 1px solid #2a2a2a;
+                border-bottom: none;
+                padding: 8px 12px;
+                gap: 8px;
+                z-index: 1000; /* Higher z-index */
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.5); /* Add shadow for better visibility */
+            }
+
+            /* Hide desktop positioning on mobile */
+            .auto-refresh-indicator:not(#mobileAutoRefreshIndicator) {
+                display: none !important;
+            }
+
+            .settings-toggle:not(#mobileSettingsToggle) {
+                display: none !important;
+            }
+
+            /* Mobile auto-refresh indicator styling */
+            #mobileAutoRefreshIndicator {
+                position: static;
+                background: transparent;
+                border: none;
+                padding: 0;
+                font-size: 0.65rem; /* Smaller font */
+                flex: 1;
+                text-align: left;
+                color: #888;
+                min-width: 0; /* Allow shrinking */
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            #mobileAutoRefreshIndicator.active {
+                color: #44ff44;
+            }
+
+            #mobileAutoRefreshIndicator.checking {
+                color: #ffaa00;
+            }
+
+            /* Mobile settings toggle styling */
+            #mobileSettingsToggle {
+                position: static;
+                background: #0a0a0a;
+                border: 1px solid #2a2a2a;
+                padding: 6px 8px; /* Smaller padding */
+                font-size: 0.65rem; /* Smaller font */
+                border-radius: 3px;
+                flex-shrink: 0;
+                color: #888;
+                transition: all 0.3s ease;
+            }
+
+            #mobileSettingsToggle:hover {
+                color: #e0e0e0;
+                border-color: #4a4a4a;
+            }
+
+            /* Pattern card headers - fix overflow issues */
+            .pattern-card h2 {
+                font-size: 0.95rem; /* Smaller font */
+                letter-spacing: 0.5px; /* Reduced letter spacing */
+                line-height: 1.3;
+                flex-wrap: wrap; /* Allow wrapping */
+                gap: 5px;
+            }
+
+            .pattern-card h2::after {
+                content: '[ ± ]'; /* Shorter collapse indicator */
+                font-size: 0.7rem;
+                font-weight: normal;
+                color: #888;
+                transition: all 0.2s ease;
+                flex-shrink: 0; /* Prevent shrinking */
+            }
+
+            .pattern-card h2.collapsed::after {
+                content: '[ + ]';
+            }
+
+            /* Make expand buttons smaller on mobile */
+            .expand-button {
+                padding: 2px 6px;
+                font-size: 0.6rem; /* Smaller font */
+                margin-top: 5px;
+                letter-spacing: 0.5px; /* Reduced letter spacing */
+            }
+
+            /* Improve event readability on mobile */
+            .day-event {
+                font-size: 0.75rem; /* Smaller font */
+                padding: 6px 8px;
+                margin: 2px 0;
+                line-height: 1.3;
+            }
+
+            .day-event.current {
+                padding: 8px;
+                margin: 3px 0;
+            }
+
+            .day-event.upcoming {
+                padding: 7px 8px;
+                margin: 2px 0;
+            }
+
+            .day-header {
+                font-size: 0.85rem; /* Smaller font */
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .day-date {
+                font-size: 0.75rem; /* Smaller font */
+            }
+
+            /* Better spacing for URL input on mobile */
+            .url-input-wrapper {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .url-input {
+                font-size: 0.8rem; /* Smaller font */
+                padding: 10px; /* Reduced padding */
+            }
+
+            .fetch-button {
+                width: 100%;
+                padding: 10px;
+                font-size: 0.8rem; /* Smaller font */
+            }
+
+            /* Improve pattern card readability */
+            .pattern-group h3 {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                font-size: 0.85rem; /* Smaller font */
+            }
+
+            .event-date {
+                display: block;
+                margin-bottom: 5px;
+                margin-right: 0;
+                font-size: 0.7rem; /* Smaller font */
+            }
+
+            .event-item {
+                font-size: 0.75rem; /* Smaller font */
+                padding: 6px 0; /* Reduced padding */
+            }
+
+            /* Smaller badges on mobile */
+            .badge {
+                font-size: 0.65rem; /* Smaller font */
+                padding: 1px 6px; /* Smaller padding */
+                margin: 1px;
+            }
+
+            /* Stats grid improvements */
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns instead of auto-fit */
+                gap: 15px;
+            }
+
+            .stat-card {
+                padding: 15px; /* Reduced padding */
+            }
+
+            .stat-card h3 {
+                font-size: 1.5rem; /* Smaller font */
+            }
+
+            .stat-card p {
+                font-size: 0.75rem; /* Smaller font */
+            }
+
+            /* Settings section mobile improvements */
+            .settings-section h2 {
+                font-size: 0.95rem; /* Smaller font */
+            }
+
+            .keywords-input {
+                font-size: 0.8rem; /* Smaller font */
+                padding: 10px; /* Reduced padding */
+            }
+
+            .settings-button {
+                font-size: 0.75rem; /* Smaller font */
+                padding: 8px 15px; /* Reduced padding */
+            }
+
+            /* Status and error messages */
+            .status-message,
+            .error-message {
+                font-size: 0.75rem; /* Smaller font */
+                padding: 12px; /* Reduced padding */
+            }
+
+            /* Divider styling */
+            .divider {
+                font-size: 0.7rem; /* Smaller font */
+                margin: 15px 0; /* Reduced margin */
+            }
+
+            /* File input label */
+            .file-input-label {
+                font-size: 0.8rem; /* Smaller font */
+                padding: 12px; /* Reduced padding */
+            }
+        }
+
+        /* Extra small mobile devices */
+        @media (max-width: 480px) {
+            body {
+                padding: 6px;
+                padding-bottom: 85px; /* More padding for smaller screens */
+            }
+
+            .header h1 {
+                font-size: 1.1rem; /* Even smaller */
+                letter-spacing: 0.5px;
+            }
+
+            .header p {
+                font-size: 0.7rem;
+            }
+
+            .upload-section,
+            .next-week-section,
+            .pattern-card {
+                padding: 10px;
+            }
+
+            .mobile-controls {
+                padding: 6px 8px;
+                font-size: 0.6rem;
+            }
+
+            #mobileAutoRefreshIndicator {
+                font-size: 0.6rem;
+            }
+
+            #mobileSettingsToggle {
+                font-size: 0.6rem;
+                padding: 5px 6px;
+            }
+
+            /* Make expand buttons even smaller on very small screens */
+            .expand-button {
+                padding: 1px 4px;
+                font-size: 0.55rem;
+            }
+
+            .day-events {
+                margin-left: 8px; /* Reduced margin */
+            }
+
+            .pattern-summary {
+                padding: 8px; /* Reduced padding */
+                font-size: 0.75rem; /* Smaller font */
+            }
+
+            .pattern-card h2 {
+                font-size: 0.85rem;
+            }
+
+            .pattern-card h2::after {
+                font-size: 0.65rem;
+            }
+
+            /* Very small stats grid */
+            .stats-grid {
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 12px;
+            }
+
+            .stat-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .stat-card p {
+                font-size: 0.7rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -706,6 +1040,16 @@
         </div>
         
         <div class="upload-section">
+            <!-- Mobile controls bar for smaller screens -->
+            <div class="mobile-controls" style="display: none;">
+                <div class="auto-refresh-indicator" id="mobileAutoRefreshIndicator">
+                    ◐ auto-refresh: off
+                </div>
+                <div class="settings-toggle" id="mobileSettingsToggle">
+                    [ settings ]
+                </div>
+            </div>
+
             <div class="input-group">
                 <div class="file-input-wrapper">
                     <input type="file" id="fileInput" accept=".ics,.ical,.ifb,.icalendar">
@@ -716,7 +1060,7 @@
             </div>
             
             <div class="divider">— OR —</div>
-            
+
             <div class="input-group">
                 <div class="url-input-wrapper">
                     <input type="text" class="url-input" id="urlInput" placeholder="enter calendar url">
@@ -1644,21 +1988,30 @@
             }, 5000);
         }
 
-        // Cookie handling functions
+        // Cookie handling functions - FIXED
         function setCookie(name, value, days) {
-            const expires = new Date(Date.now() + days * 864e5).toUTCString();
-            document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
         }
 
         function getCookie(name) {
-            return document.cookie.split('; ').reduce((r, v) => {
-                const parts = v.split('=');
-                return parts[0] === name ? decodeURIComponent(parts[1]) : r;
-            }, '');
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+            }
+            return null;
         }
 
         function deleteCookie(name) {
-            setCookie(name, '', -1);
+            document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         }
 
         // Status message handling
@@ -2087,6 +2440,85 @@
 
         // Toggle auto-refresh on indicator click
         document.addEventListener('DOMContentLoaded', function() {
+            // Show mobile controls on mobile devices
+            function showMobileControlsIfNeeded() {
+                const isMobile = window.innerWidth <= 768;
+                const mobileControls = document.querySelector('.mobile-controls');
+                const desktopAutoRefresh = document.getElementById('autoRefreshIndicator');
+                const desktopSettings = document.getElementById('settingsToggle');
+
+                if (isMobile) {
+                    mobileControls.style.display = 'flex';
+                    desktopAutoRefresh.style.display = 'none';
+                    desktopSettings.style.display = 'none';
+                } else {
+                    mobileControls.style.display = 'none';
+                    desktopAutoRefresh.style.display = 'block';
+                    desktopSettings.style.display = 'block';
+                }
+            }
+
+            // Show mobile controls immediately
+            showMobileControlsIfNeeded();
+
+            // Handle window resize
+            window.addEventListener('resize', showMobileControlsIfNeeded);
+
+            // Set up mobile control event handlers
+            const mobileAutoRefresh = document.getElementById('mobileAutoRefreshIndicator');
+            const mobileSettings = document.getElementById('mobileSettingsToggle');
+
+            if (mobileAutoRefresh) {
+                mobileAutoRefresh.addEventListener('click', function() {
+                    if (autoRefreshInterval) {
+                        stopAutoRefresh();
+                        this.textContent = '◐ auto-refresh: off';
+                    } else {
+                        const savedURL = getCookie('calendarURL');
+                        if (savedURL && currentPatterns) {
+                            startAutoRefresh();
+                            this.textContent = '● auto-refresh: on';
+                        } else {
+                            showStatus('load a calendar first to enable auto-refresh', 'info');
+                        }
+                    }
+                });
+            }
+
+            if (mobileSettings) {
+                mobileSettings.addEventListener('click', function() {
+                    const section = document.getElementById('settingsSection');
+                    if (section.style.display === 'none' || section.style.display === '') {
+                        section.style.display = 'block';
+                        this.textContent = '[ hide settings ]';
+
+                        // Load current keywords into input
+                        const savedKeywords = getCookie('highlightKeywords');
+                        if (savedKeywords) {
+                            try {
+                                const keywords = JSON.parse(savedKeywords);
+                                document.getElementById('keywordsInput').value = keywords.join(', ');
+                            } catch (e) {
+                                console.error('Error loading keywords:', e);
+                            }
+                        } else {
+                            document.getElementById('keywordsInput').value = 'exam, test, midterm, final, quiz, assessment';
+                        }
+
+                        setTimeout(() => {
+                            section.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }, 100);
+                    } else {
+                        section.style.display = 'none';
+                        this.textContent = '[ settings ]';
+                    }
+                });
+            }
+
+            // Desktop indicator click handler
             const indicator = document.getElementById('autoRefreshIndicator');
             indicator.addEventListener('click', function() {
                 if (autoRefreshInterval) {
@@ -2102,11 +2534,7 @@
             });
         });
 
-        // Start time updates immediately
-        updateTime();
-        timeUpdateInterval = setInterval(updateTime, 1000);
-
-        // Auto-load saved URL on page load
+        // Auto-load saved URL on page load - FIXED
         window.addEventListener('load', function() {
             const savedURL = getCookie('calendarURL');
             if (savedURL) {
@@ -2118,33 +2546,79 @@
         // Make functions available globally
         window.fetchFromURL = fetchFromURL;
 
-        // Make toggleExpand available globally
-        window.toggleExpand = function(id, button) {
-            const list = document.getElementById(id);
-            if (list.classList.contains('collapsed')) {
-                list.classList.remove('collapsed');
-                button.textContent = '[ collapse ]';
-            } else {
-                list.classList.add('collapsed');
-                button.textContent = '[ expand ]';
-            }
-        };
+        // Settings functionality - FIXED
+        document.getElementById('saveKeywordsButton').addEventListener('click', function() {
+            const keywordsInput = document.getElementById('keywordsInput');
+            const keywords = keywordsInput.value.split(',').map(k => k.trim()).filter(k => k !== '');
 
-        // NEW: Make togglePatternSection available globally for collapsible pattern sections
-        window.togglePatternSection = function(sectionId) {
-            const content = document.getElementById(sectionId);
-            const header = document.querySelector(`[onclick="togglePatternSection('${sectionId}')"]`);
-
-            if (content.classList.contains('collapsed')) {
-                content.classList.remove('collapsed');
-                header.classList.remove('collapsed');
-                content.style.maxHeight = content.scrollHeight + 'px';
-            } else {
-                content.classList.add('collapsed');
-                header.classList.add('collapsed');
-                content.style.maxHeight = '0px';
+            if (keywords.length === 0) {
+                showError('please enter at least one keyword.');
+                return;
             }
-        };
+
+            // Save keywords to cookie - FIXED
+            setCookie('highlightKeywords', JSON.stringify(keywords), 365);
+            showStatus('keywords saved! refreshing highlights...', 'success');
+
+            // Refresh the display to apply new keywords
+            if (currentPatterns) {
+                setTimeout(() => {
+                    displayResults(currentPatterns);
+                    refreshEventStatuses();
+                }, 500);
+            }
+        });
+
+        document.getElementById('resetKeywordsButton').addEventListener('click', function() {
+            // Reset to default keywords - FIXED
+            deleteCookie('highlightKeywords');
+            document.getElementById('keywordsInput').value = '';
+            showStatus('keywords reset to default. refreshing highlights...', 'success');
+
+            // Refresh the display to apply default keywords
+            if (currentPatterns) {
+                setTimeout(() => {
+                    displayResults(currentPatterns);
+                    refreshEventStatuses();
+                }, 500);
+            }
+        });
+
+        // Load saved keywords when settings section is opened - FIXED
+        document.getElementById('settingsToggle').addEventListener('click', function() {
+            const section = document.getElementById('settingsSection');
+            if (section.style.display === 'none' || section.style.display === '') {
+                section.style.display = 'block';
+                this.textContent = '[ hide settings ]';
+
+                // Load current keywords into input - FIXED
+                const savedKeywords = getCookie('highlightKeywords');
+                if (savedKeywords) {
+                    try {
+                        const keywords = JSON.parse(savedKeywords);
+                        document.getElementById('keywordsInput').value = keywords.join(', ');
+                    } catch (e) {
+                        console.error('Error loading keywords:', e);
+                        // Fallback to default
+                        document.getElementById('keywordsInput').value = 'exam, test, midterm, final, quiz, assessment';
+                    }
+                } else {
+                    // Show default keywords
+                    document.getElementById('keywordsInput').value = 'exam, test, midterm, final, quiz, assessment';
+                }
+
+                // Smoothly scroll to the settings section
+                setTimeout(() => {
+                    section.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 100); // Small delay to ensure the section is visible before scrolling
+            } else {
+                section.style.display = 'none';
+                this.textContent = '[ settings ]';
+            }
+        });
 
         // Function to get current highlight keywords (from saved settings or default)
         function getHighlightKeywords() {
@@ -2168,77 +2642,37 @@
             return keywords.some(keyword => summary.includes(keyword.toLowerCase()));
         }
 
-        // Settings functionality
-        document.getElementById('saveKeywordsButton').addEventListener('click', function() {
-            const keywordsInput = document.getElementById('keywordsInput');
-            const keywords = keywordsInput.value.split(',').map(k => k.trim()).filter(k => k !== '');
+        // Pattern section toggle functionality
+        function togglePatternSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const header = content.previousElementSibling;
 
-            if (keywords.length === 0) {
-                showError('please enter at least one keyword.');
-                return;
-            }
-
-            // Save keywords to cookie
-            setCookie('highlightKeywords', JSON.stringify(keywords), 365);
-            showStatus('keywords saved! refreshing highlights...', 'success');
-
-            // Refresh the display to apply new keywords
-            if (currentPatterns) {
-                setTimeout(() => {
-                    displayResults(currentPatterns);
-                    refreshEventStatuses();
-                }, 500);
-            }
-        });
-
-        document.getElementById('resetKeywordsButton').addEventListener('click', function() {
-            // Reset to default keywords
-            deleteCookie('highlightKeywords');
-            document.getElementById('keywordsInput').value = '';
-            showStatus('keywords reset to default. refreshing highlights...', 'success');
-
-            // Refresh the display to apply default keywords
-            if (currentPatterns) {
-                setTimeout(() => {
-                    displayResults(currentPatterns);
-                    refreshEventStatuses();
-                }, 500);
-            }
-        });
-
-        // Load saved keywords when settings section is opened
-        document.getElementById('settingsToggle').addEventListener('click', function() {
-            const section = document.getElementById('settingsSection');
-            if (section.style.display === 'none' || section.style.display === '') {
-                section.style.display = 'block';
-                this.textContent = '[ hide settings ]';
-
-                // Load current keywords into input
-                const savedKeywords = getCookie('highlightKeywords');
-                if (savedKeywords) {
-                    try {
-                        const keywords = JSON.parse(savedKeywords);
-                        document.getElementById('keywordsInput').value = keywords.join(', ');
-                    } catch (e) {
-                        console.error('Error loading keywords:', e);
-                    }
-                } else {
-                    // Show default keywords
-                    document.getElementById('keywordsInput').value = 'exam, test, midterm, final, quiz, assessment';
-                }
-
-                // Smoothly scroll to the settings section
-                setTimeout(() => {
-                    section.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }, 100); // Small delay to ensure the section is visible before scrolling
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                content.style.maxHeight = content.scrollHeight + 'px';
+                header.classList.remove('collapsed');
             } else {
-                section.style.display = 'none';
-                this.textContent = '[ settings ]';
+                content.classList.add('collapsed');
+                content.style.maxHeight = '0px';
+                header.classList.add('collapsed');
             }
-        });
+        }
+
+        // Expand button functionality
+        function toggleExpand(listId, button) {
+            const list = document.getElementById(listId);
+            if (list.classList.contains('collapsed')) {
+                list.classList.remove('collapsed');
+                button.textContent = '[ collapse ]';
+            } else {
+                list.classList.add('collapsed');
+                button.textContent = '[ expand ]';
+            }
+        }
+
+        // Make functions available globally
+        window.togglePatternSection = togglePatternSection;
+        window.toggleExpand = toggleExpand;
     </script>
     <footer style="
     text-align: center;
@@ -2248,7 +2682,7 @@
     color: #666;
     font-size: 0.8rem;
 ">
-        <div>wmr? v2.3</div>
+        <div>wmr? v3.1</div>
         <div style="margin-top: 5px;">
             <a href="https://github.com/alfaoz" target="_blank" id="githubLink" style="
             color: #888;
