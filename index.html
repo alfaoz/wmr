@@ -763,6 +763,7 @@
         let lastCalendarHash = '';
         let currentPatterns = null;
         let timeUpdateInterval = null;
+        let showNoChangesNotification = false; // Track whether to show "no changes" notifications
 
         // Display current date
         const today = new Date();
@@ -1898,45 +1899,160 @@
                 }
 
                 const content = await response.text();
-                const newHash = simpleHash(content);
 
-                if (lastCalendarHash && newHash !== lastCalendarHash) {
-                    // Calendar has changed, refresh the display
-                    indicator.className = 'auto-refresh-indicator active';
-                    indicator.textContent = '↻ updating...';
+                // Debug logging with diff check instead of hash
+                console.log('=== Calendar Update Check ===');
+                console.log('Content length:', content.length);
 
-                    processICSContent(content);
-                    lastCalendarHash = newHash;
+                if (window.lastCalendarContent) {
+                    // Perform detailed diff check
+                    const hasChanges = performDetailedDiff(window.lastCalendarContent, content);
 
-                    // Show brief update notification
-                    showStatus(' calendar updated automatically', 'success');
+                    if (hasChanges) {
+                        // Calendar has changed, refresh the display
+                        console.log('CHANGES DETECTED - Refreshing calendar');
 
-                    setTimeout(() => {
+                        indicator.className = 'auto-refresh-indicator active';
+                        indicator.textContent = '↻ updating...';
+
+                        processICSContent(content);
+                        window.lastCalendarContent = content; // Store for next comparison
+
+                        // Show brief update notification
+                        showStatus('calendar updated automatically', 'success');
+                        showNoChangesNotification = true; // Enable "no changes" notifications after first update
+
+                        setTimeout(() => {
+                            indicator.className = 'auto-refresh-indicator active';
+                            indicator.textContent = '● auto-refresh: on';
+                        }, 2000);
+                    } else {
+                        // No changes detected
+                        console.log('NO CHANGES - Content is identical');
+                        window.lastCalendarContent = content; // Store for next comparison
                         indicator.className = 'auto-refresh-indicator active';
                         indicator.textContent = '● auto-refresh: on';
-                    }, 2000);
+
+                        // Show "no changes" notification only if we've had at least one update before
+                        // and only occasionally (every 5th check) to avoid spam
+                        if (showNoChangesNotification && Math.random() < 0.2) { // 20% chance to show notification
+                            console.log('Showing "no changes" notification');
+                            showStatus('calendar checked - no changes detected', 'info');
+                        } else if (showNoChangesNotification) {
+                            console.log('No changes detected (notification suppressed)');
+                        }
+                    }
                 } else {
-                    lastCalendarHash = newHash;
+                    // First time setting the content
+                    console.log('🆕 FIRST TIME - Setting initial content');
+                    window.lastCalendarContent = content; // Store for next comparison
                     indicator.className = 'auto-refresh-indicator active';
-                    indicator.textContent = '��� auto-refresh: on';
+                    indicator.textContent = '● auto-refresh: on';
                 }
             } catch (error) {
                 console.error('Auto-refresh error:', error);
                 indicator.className = 'auto-refresh-indicator active';
                 indicator.textContent = '● auto-refresh: on';
+
+                // Show error notification occasionally
+                if (Math.random() < 0.3) { // 30% chance to show error notification
+                    showStatus('⚠️ auto-refresh connection issue - retrying...', 'error');
+                }
             }
         }
 
-        function simpleHash(str) {
-            let hash = 0;
-            for (let i = 0; i < str.length; i++) {
-                const char = str.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash; // Convert to 32-bit integer
+        // New function to perform detailed diff analysis
+        function performDetailedDiff(oldContent, newContent) {
+            if (oldContent === newContent) {
+                console.log('📄 Content is byte-for-byte identical');
+                return false;
             }
-            return hash.toString();
-        }
 
+            console.log('�� Content differs - analyzing changes...');
+
+            // Split into lines for comparison
+            const oldLines = oldContent.split('\n');
+            const newLines = newContent.split('\n');
+
+            console.log(`Old content: ${oldLines.length} lines`);
+            console.log(`New content: ${newLines.length} lines`);
+
+            const maxLines = Math.max(oldLines.length, newLines.length);
+            let differences = 0;
+            let significantChanges = 0;
+
+            // Track types of changes
+            const changeTypes = {
+                timestamps: 0,
+                sequences: 0,
+                uids: 0,
+                content: 0,
+                lineCount: 0
+            };
+
+            for (let i = 0; i < maxLines; i++) {
+                const oldLine = oldLines[i] || '';
+                const newLine = newLines[i] || '';
+
+                if (oldLine !== newLine) {
+                    differences++;
+
+                    // Analyze type of change
+                    if (oldLine.startsWith('DTSTAMP:') || newLine.startsWith('DTSTAMP:')) {
+                        changeTypes.timestamps++;
+                        console.log(`Timestamp change on line ${i + 1}:`);
+                        console.log(`  Old: ${oldLine}`);
+                        console.log(`  New: ${newLine}`);
+                    } else if (oldLine.startsWith('SEQUENCE:') || newLine.startsWith('SEQUENCE:')) {
+                        changeTypes.sequences++;
+                        console.log(`Sequence change on line ${i + 1}:`);
+                        console.log(`  Old: ${oldLine}`);
+                        console.log(`  New: ${newLine}`);
+                    } else if (oldLine.includes('UID:') || newLine.includes('UID:')) {
+                        changeTypes.uids++;
+                        console.log(`UID change on line ${i + 1}:`);
+                        console.log(`  Old: ${oldLine}`);
+                        console.log(`  New: ${newLine}`);
+                    } else if (oldLine === '' && newLine !== '' || oldLine !== '' && newLine === '') {
+                        changeTypes.lineCount++;
+                        console.log(`Line count change at line ${i + 1}:`);
+                        console.log(`  Old: "${oldLine}"`);
+                        console.log(`  New: "${newLine}"`);
+                    } else {
+                        changeTypes.content++;
+                        significantChanges++;
+                        console.log(`📝 Content change on line ${i + 1}:`);
+                        console.log(`  Old: ${oldLine}`);
+                        console.log(`  New: ${newLine}`);
+                    }
+
+                    // Limit detailed output to first 10 differences
+                    if (differences >= 10) {
+                        console.log(`... and ${maxLines - i - 1} more lines to check`);
+                        break;
+                    }
+                }
+            }
+
+            // Summary
+            console.log('=== CHANGE SUMMARY ===');
+            console.log(`Total differences: ${differences}`);
+            console.log(`Timestamp changes: ${changeTypes.timestamps}`);
+            console.log(`Sequence changes: ${changeTypes.sequences}`);
+            console.log(`UID changes: ${changeTypes.uids}`);
+            console.log(`Line count changes: ${changeTypes.lineCount}`);
+            console.log(`Significant content changes: ${changeTypes.content}`);
+
+            // Determine if we should refresh based on significant changes
+            const shouldRefresh = significantChanges > 0 || changeTypes.content > 0;
+
+            if (!shouldRefresh && differences > 0) {
+                console.log('🔍 Changes detected but appear to be metadata only (timestamps, sequences, UIDs)');
+                console.log('🚫 Skipping refresh to preserve view state');
+            }
+
+            return shouldRefresh;
+        }
         // Enhanced processICSContent to store patterns and enable auto-refresh
         function processICSContent(content) {
             try {
@@ -1958,8 +2074,8 @@
                 // Start auto-refresh if we have a saved URL and it's not already running
                 const savedURL = getCookie('calendarURL');
                 if (savedURL && !autoRefreshInterval) {
-                    // Set initial hash
-                    lastCalendarHash = simpleHash(content);
+                    // Store initial content for comparison
+                    window.lastCalendarContent = content;
                     startAutoRefresh();
                 }
             } catch (error) {
