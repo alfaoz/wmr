@@ -2123,5 +2123,64 @@
             }
         });
     </script>
+    <footer style="
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    border-top: 1px solid #2a2a2a;
+    color: #666;
+    font-size: 0.8rem;
+">
+        <div>wmr? v2.1</div>
+        <div style="margin-top: 5px;">
+            <a href="https://github.com/alfaoz" target="_blank" id="githubLink" style="
+            color: #888;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+        ">
+                github.com/alfaoz
+            </a>
+        </div>
+    </footer>
+
+    <style>
+        #githubLink::before {
+            content: '$ ';
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: #44ff44;
+        }
+
+        #githubLink::after {
+            content: '_';
+            animation: blink 1s infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: #44ff44;
+            margin-left: 2px;
+        }
+
+        #githubLink:hover {
+            color: #e0e0e0;
+            transform: translateX(10px);
+        }
+
+        #githubLink:hover::before {
+            opacity: 1;
+        }
+
+        #githubLink:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
 </body>
+
 </html>
