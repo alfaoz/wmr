@@ -6,7 +6,7 @@ features:
 - time slot analysis
 - break slot detection
 
-happy rooster's
+happy rooster's!
 
 ---
 issues / suggestions? please create an issue over at https://github.com/alfaoz/wmr/issues/ , thanks!
