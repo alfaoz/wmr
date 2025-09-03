@@ -596,107 +596,155 @@
         .settings-section {
             background: #151515;
             border: 1px solid #2a2a2a;
-            padding: 25px;
+            padding: 20px;
             margin-bottom: 30px;
             display: none;
         }
 
         .settings-section h2 {
             color: #e0e0e0;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-size: 1.1rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 300;
         }
 
-        .settings-group {
-            margin-bottom: 20px;
+        .settings-compact-group {
+            margin-bottom: 15px;
+            background: #0a0a0a;
+            border: 1px solid #2a2a2a;
+            border-radius: 4px;
+            overflow: hidden;
         }
 
-        .settings-group label {
-            display: block;
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: #151515;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .settings-row label {
             color: #e0e0e0;
-            margin-bottom: 8px;
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin: 0;
+            flex: 1;
         }
 
-        .keywords-input {
-            width: 100%;
-            padding: 12px;
-            background: #0a0a0a;
-            color: #e0e0e0;
-            border: 1px solid #2a2a2a;
-            font-family: inherit;
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-        }
-
-        .keywords-input:focus {
-            outline: none;
-            border-color: #4a4a4a;
-        }
-
-        .keywords-help {
-            color: #888;
-            font-size: 0.8rem;
-            font-style: italic;
-        }
-
-        .settings-buttons {
+        .settings-controls {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 6px;
+            flex-shrink: 0;
         }
 
-        .settings-button {
-            padding: 10px 20px;
+        .settings-mini-btn {
             background: #0a0a0a;
             color: #e0e0e0;
             border: 1px solid #2a2a2a;
+            padding: 6px 8px;
             cursor: pointer;
             font-family: inherit;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.75rem;
             transition: all 0.2s ease;
+            border-radius: 3px;
+            min-width: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .settings-button:hover {
+        .settings-mini-btn:hover {
             border-color: #4a4a4a;
             background: #1a1a1a;
+            transform: translateY(-1px);
         }
 
-        .settings-button.primary {
+        .settings-mini-btn.primary {
             background: #2a2a2a;
             border-color: #4a4a4a;
         }
 
-        .settings-button.primary:hover {
+        .settings-mini-btn.primary:hover {
             background: #3a3a3a;
             border-color: #5a5a5a;
         }
 
-        .current-keywords {
+        .keywords-input {
+            width: 100%;
+            padding: 12px 15px;
             background: #0a0a0a;
-            border: 1px solid #2a2a2a;
-            padding: 10px;
-            margin-top: 10px;
+            color: #e0e0e0;
+            border: none;
+            border-top: 1px solid #2a2a2a;
+            font-family: inherit;
+            font-size: 0.85rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .keywords-input:focus {
+            outline: none;
+            background: #1a1a1a;
+        }
+
+        .keywords-input.compact {
+            padding: 10px 15px;
             font-size: 0.8rem;
         }
 
-        .keyword-tag {
-            display: inline-block;
-            background: #ff8800;
-            color: #0a0a0a;
-            padding: 2px 6px;
-            margin: 2px;
-            font-size: 0.75rem;
-            font-weight: bold;
+        .offset-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border-top: 1px solid #2a2a2a;
         }
 
+        .offset-item {
+            display: flex;
+            flex-direction: column;
+            padding: 10px 15px;
+            border-right: 1px solid #2a2a2a;
+        }
+
+        .offset-item:last-child {
+            border-right: none;
+        }
+
+        .offset-item label {
+            color: #888;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .offset-item input {
+            padding: 8px;
+            background: #151515;
+            color: #e0e0e0;
+            border: 1px solid #2a2a2a;
+            font-family: inherit;
+            font-size: 0.85rem;
+            border-radius: 3px;
+            width: 100%;
+        }
+
+        .offset-item input:focus {
+            outline: none;
+            border-color: #4a4a4a;
+            background: #1a1a1a;
+        }
+
+        .offset-item span {
+            color: #666;
+            font-size: 0.7rem;
+            margin-top: 3px;
+            text-align: right;
+        }
         /* Mobile-friendly responsive design */
         @media (max-width: 768px) {
             body {
@@ -920,37 +968,74 @@
             }
 
             /* Settings section mobile improvements */
+            .settings-section {
+                padding: 15px;
+            }
+
             .settings-section h2 {
-                font-size: 0.95rem; /* Smaller font */
+                font-size: 0.95rem;
+                margin-bottom: 12px;
+            }
+
+            .settings-compact-group {
+                margin-bottom: 12px;
+            }
+
+            .settings-row {
+                padding: 10px 12px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .settings-row label {
+                font-size: 0.8rem;
+                width: 100%;
+            }
+
+            .settings-controls {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .settings-mini-btn {
+                font-size: 0.7rem;
+                padding: 5px 6px;
+                min-width: 28px;
             }
 
             .keywords-input {
-                font-size: 0.8rem; /* Smaller font */
-                padding: 10px; /* Reduced padding */
+                font-size: 0.8rem;
+                padding: 10px 12px;
             }
 
-            .settings-button {
-                font-size: 0.75rem; /* Smaller font */
-                padding: 8px 15px; /* Reduced padding */
+            .keywords-input.compact {
+                padding: 8px 12px;
+                font-size: 0.75rem;
             }
 
-            /* Status and error messages */
-            .status-message,
-            .error-message {
-                font-size: 0.75rem; /* Smaller font */
-                padding: 12px; /* Reduced padding */
+            .offset-controls {
+                grid-template-columns: 1fr 1fr;
+                gap: 0;
             }
 
-            /* Divider styling */
-            .divider {
-                font-size: 0.7rem; /* Smaller font */
-                margin: 15px 0; /* Reduced margin */
+            .offset-item {
+                padding: 8px 12px;
             }
 
-            /* File input label */
-            .file-input-label {
-                font-size: 0.8rem; /* Smaller font */
-                padding: 12px; /* Reduced padding */
+            .offset-item label {
+                font-size: 0.7rem;
+                margin-bottom: 4px;
+            }
+
+            .offset-item input {
+                padding: 6px;
+                font-size: 0.8rem;
+            }
+
+            .offset-item span {
+                font-size: 0.65rem;
+                margin-top: 2px;
             }
         }
 
@@ -1081,14 +1166,41 @@
 
         <div class="settings-section" id="settingsSection">
             <h2>Settings</h2>
-            <div class="settings-group">
-                <label for="keywordsInput">Manage Highlight Keywords</label>
-                <input type="text" id="keywordsInput" class="keywords-input" placeholder="Enter keywords separated by commas">
-                <div class="keywords-help">Tip: Use keywords like "exam, test, quiz" to highlight important events.</div>
+
+            <!-- Keywords Section -->
+            <div class="settings-compact-group">
+                <div class="settings-row">
+                    <label for="keywordsInput">Highlight Keywords</label>
+                    <div class="settings-controls">
+                        <button class="settings-mini-btn" id="saveKeywordsButton" title="Save Keywords">💾</button>
+                        <button class="settings-mini-btn" id="resetKeywordsButton" title="Reset to Default">🔄</button>
+                    </div>
+                </div>
+                <input type="text" id="keywordsInput" class="keywords-input" placeholder="exam, test, quiz, midterm, final">
             </div>
-            <div class="settings-buttons">
-                <button class="settings-button" id="saveKeywordsButton">[ Save Keywords ]</button>
-                <button class="settings-button" id="resetKeywordsButton">[ Reset to Default ]</button>
+
+            <!-- Time Offset Section -->
+            <div class="settings-compact-group">
+                <div class="settings-row">
+                    <label for="timeOffsetKeywords">Time Offset Settings</label>
+                    <div class="settings-controls">
+                        <button class="settings-mini-btn primary" id="saveTimeOffsetsButton" title="Save Time Offsets">💾</button>
+                        <button class="settings-mini-btn" id="resetTimeOffsetsButton" title="Reset Time Offsets">🔄</button>
+                    </div>
+                </div>
+                <input type="text" id="timeOffsetKeywords" class="keywords-input compact" placeholder="lecture, seminar, class">
+                <div class="offset-controls">
+                    <div class="offset-item">
+                        <label>Start</label>
+                        <input type="number" id="startTimeOffset" value="0" min="-60" max="60">
+                        <span>min</span>
+                    </div>
+                    <div class="offset-item">
+                        <label>End</label>
+                        <input type="number" id="endTimeOffset" value="-15" min="-60" max="60">
+                        <span>min</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1843,7 +1955,7 @@
                         return `
             <div class="${eventClass}">
                 ${indicator}
-                <span class="event-time">${event.start.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false })}${event.end ? ' - ' + event.end.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}</span>
+                <span class="event-time">${formatEventTimeWithOffset(event)}</span>
                 ${event.summary || 'Untitled'}
                 ${event.location ? ` @ ${event.location}` : ''}
             </div>
@@ -2493,7 +2605,7 @@
                         section.style.display = 'block';
                         this.textContent = '[ hide settings ]';
 
-                        // Load current keywords into input
+                        // Load current keywords into input - FIXED
                         const savedKeywords = getCookie('highlightKeywords');
                         if (savedKeywords) {
                             try {
@@ -2501,17 +2613,27 @@
                                 document.getElementById('keywordsInput').value = keywords.join(', ');
                             } catch (e) {
                                 console.error('Error loading keywords:', e);
+                                // Fallback to default
+                                document.getElementById('keywordsInput').value = 'exam, test, midterm, final';
                             }
                         } else {
+                            // Show default keywords
                             document.getElementById('keywordsInput').value = 'exam, test, midterm, final';
                         }
 
+                        // Load current time offset settings
+                        const timeOffsetSettings = getTimeOffsetSettings();
+                        document.getElementById('timeOffsetKeywords').value = timeOffsetSettings.keywords.join(', ');
+                        document.getElementById('startTimeOffset').value = timeOffsetSettings.startOffset;
+                        document.getElementById('endTimeOffset').value = timeOffsetSettings.endOffset;
+
+                        // Smoothly scroll to the settings section
                         setTimeout(() => {
                             section.scrollIntoView({
                                 behavior: 'smooth',
                                 block: 'start'
                             });
-                        }, 100);
+                        }, 100); // Small delay to ensure the section is visible before scrolling
                     } else {
                         section.style.display = 'none';
                         this.textContent = '[ settings ]';
@@ -2533,6 +2655,51 @@
                     }
                 }
             });
+
+            // Desktop settings toggle click handler
+            const desktopSettingsToggle = document.getElementById('settingsToggle');
+            if (desktopSettingsToggle) {
+                desktopSettingsToggle.addEventListener('click', function() {
+                    const section = document.getElementById('settingsSection');
+                    if (section.style.display === 'none' || section.style.display === '') {
+                        section.style.display = 'block';
+                        this.textContent = '[ hide settings ]';
+
+                        // Load current keywords into input
+                        const savedKeywords = getCookie('highlightKeywords');
+                        if (savedKeywords) {
+                            try {
+                                const keywords = JSON.parse(savedKeywords);
+                                document.getElementById('keywordsInput').value = keywords.join(', ');
+                            } catch (e) {
+                                console.error('Error loading keywords:', e);
+                                // Fallback to default
+                                document.getElementById('keywordsInput').value = 'exam, test, midterm, final';
+                            }
+                        } else {
+                            // Show default keywords
+                            document.getElementById('keywordsInput').value = 'exam, test, midterm, final';
+                        }
+
+                        // Load current time offset settings
+                        const timeOffsetSettings = getTimeOffsetSettings();
+                        document.getElementById('timeOffsetKeywords').value = timeOffsetSettings.keywords.join(', ');
+                        document.getElementById('startTimeOffset').value = timeOffsetSettings.startOffset;
+                        document.getElementById('endTimeOffset').value = timeOffsetSettings.endOffset;
+
+                        // Smoothly scroll to the settings section
+                        setTimeout(() => {
+                            section.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }, 100);
+                    } else {
+                        section.style.display = 'none';
+                        this.textContent = '[ settings ]';
+                    }
+                });
+            }
         });
 
         // Auto-load saved URL on page load - FIXED
@@ -2585,95 +2752,115 @@
             }
         });
 
-        // Load saved keywords when settings section is opened - FIXED
-        document.getElementById('settingsToggle').addEventListener('click', function() {
-            const section = document.getElementById('settingsSection');
-            if (section.style.display === 'none' || section.style.display === '') {
-                section.style.display = 'block';
-                this.textContent = '[ hide settings ]';
+        // Time offset functionality
+        document.getElementById('saveTimeOffsetsButton').addEventListener('click', function() {
+            const offsetKeywords = document.getElementById('timeOffsetKeywords').value.split(',').map(k => k.trim()).filter(k => k !== '');
+            const startOffset = parseInt(document.getElementById('startTimeOffset').value) || 0;
+            const endOffset = parseInt(document.getElementById('endTimeOffset').value) || 0;
 
-                // Load current keywords into input - FIXED
-                const savedKeywords = getCookie('highlightKeywords');
-                if (savedKeywords) {
-                    try {
-                        const keywords = JSON.parse(savedKeywords);
-                        document.getElementById('keywordsInput').value = keywords.join(', ');
-                    } catch (e) {
-                        console.error('Error loading keywords:', e);
-                        // Fallback to default
-                        document.getElementById('keywordsInput').value = 'exam, test, midterm, final';
-                    }
-                } else {
-                    // Show default keywords
-                    document.getElementById('keywordsInput').value = 'exam, test, midterm, final';
-                }
+            if (offsetKeywords.length === 0) {
+                showError('please enter at least one keyword for time offsets.');
+                return;
+            }
 
-                // Smoothly scroll to the settings section
+            // Save time offset settings to cookies
+            setCookie('timeOffsetKeywords', JSON.stringify(offsetKeywords), 365);
+            setCookie('startTimeOffset', startOffset.toString(), 365);
+            setCookie('endTimeOffset', endOffset.toString(), 365);
+
+            showStatus('time offset settings saved! refreshing display...', 'success');
+
+            // Refresh the display to apply new time offsets
+            if (currentPatterns) {
                 setTimeout(() => {
-                    section.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }, 100); // Small delay to ensure the section is visible before scrolling
-            } else {
-                section.style.display = 'none';
-                this.textContent = '[ settings ]';
+                    displayResults(currentPatterns);
+                    refreshEventStatuses();
+                }, 500);
             }
         });
 
-        // Function to get current highlight keywords (from saved settings or default)
-        function getHighlightKeywords() {
-            const savedKeywords = getCookie('highlightKeywords');
-            if (savedKeywords) {
-                try {
-                    return JSON.parse(savedKeywords);
-                } catch (e) {
-                    console.error('Error parsing saved keywords:', e);
-                    return ['exam', 'test', 'midterm', 'final', 'quiz', 'assessment'];
-                }
+        document.getElementById('resetTimeOffsetsButton').addEventListener('click', function() {
+            // Reset to default time offset settings
+            deleteCookie('timeOffsetKeywords');
+            deleteCookie('startTimeOffset');
+            deleteCookie('endTimeOffset');
+
+            document.getElementById('timeOffsetKeywords').value = 'lecture, seminar, class';
+            document.getElementById('startTimeOffset').value = '0';
+            document.getElementById('endTimeOffset').value = '-15';
+
+            showStatus('time offset settings reset to default. refreshing display...', 'success');
+
+            // Refresh the display to apply default settings
+            if (currentPatterns) {
+                setTimeout(() => {
+                    displayResults(currentPatterns);
+                    refreshEventStatuses();
+                }, 500);
             }
-            return ['exam', 'test', 'midterm', 'final', 'quiz', 'assessment'];
+        });
+
+        // Function to get current time offset settings
+        function getTimeOffsetSettings() {
+            const keywords = getCookie('timeOffsetKeywords');
+            const startOffset = getCookie('startTimeOffset');
+            const endOffset = getCookie('endTimeOffset');
+
+            return {
+                keywords: keywords ? JSON.parse(keywords) : ['lecture', 'seminar', 'class'],
+                startOffset: startOffset ? parseInt(startOffset) : 0,
+                endOffset: endOffset ? parseInt(endOffset) : -15
+            };
         }
 
-        // Function to check if event contains highlight keywords
-        function isExamEvent(event) {
+        // Function to check if event should have time offset applied
+        function shouldApplyTimeOffset(event) {
             if (!event.summary) return false;
             const summary = event.summary.toLowerCase();
-            const keywords = getHighlightKeywords();
-            return keywords.some(keyword => summary.includes(keyword.toLowerCase()));
+            const settings = getTimeOffsetSettings();
+            return settings.keywords.some(keyword => summary.includes(keyword.toLowerCase()));
         }
 
-        // Pattern section toggle functionality
-        function togglePatternSection(sectionId) {
-            const content = document.getElementById(sectionId);
-            const header = content.previousElementSibling;
+        // Function to apply time offset to event times
+        function applyTimeOffset(event) {
+            if (!shouldApplyTimeOffset(event)) return event;
 
-            if (content.classList.contains('collapsed')) {
-                content.classList.remove('collapsed');
-                content.style.maxHeight = content.scrollHeight + 'px';
-                header.classList.remove('collapsed');
-            } else {
-                content.classList.add('collapsed');
-                content.style.maxHeight = '0px';
-                header.classList.add('collapsed');
+            const settings = getTimeOffsetSettings();
+            const offsetEvent = { ...event };
+
+            // Apply start time offset
+            if (offsetEvent.start && settings.startOffset !== 0) {
+                offsetEvent.start = new Date(offsetEvent.start.getTime() + (settings.startOffset * 60 * 1000));
             }
-        }
 
-        // Expand button functionality
-        function toggleExpand(listId, button) {
-            const list = document.getElementById(listId);
-            if (list.classList.contains('collapsed')) {
-                list.classList.remove('collapsed');
-                button.textContent = '[ collapse ]';
-            } else {
-                list.classList.add('collapsed');
-                button.textContent = '[ expand ]';
+            // Apply end time offset
+            if (offsetEvent.end && settings.endOffset !== 0) {
+                offsetEvent.end = new Date(offsetEvent.end.getTime() + (settings.endOffset * 60 * 1000));
             }
+
+            return offsetEvent;
         }
 
-        // Make functions available globally
-        window.togglePatternSection = togglePatternSection;
-        window.toggleExpand = toggleExpand;
+        // Function to format event time with offset applied
+        function formatEventTimeWithOffset(event) {
+            const offsetEvent = applyTimeOffset(event);
+            if (!offsetEvent.start) return '';
+
+            const startTime = offsetEvent.start.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+            const endTime = offsetEvent.end ? offsetEvent.end.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false }) : '';
+
+            return endTime ? `${startTime} - ${endTime}` : startTime;
+        }
+
+        // Function to determine if an event is an exam
+        function isExamEvent(event) {
+            if (!event || !event.summary) return false;
+
+            const summary = event.summary.toLowerCase();
+            const examKeywords = ['exam', 'test', 'quiz', 'midterm', 'final', 'assessment', 'examination'];
+
+            return examKeywords.some(keyword => summary.includes(keyword));
+        }
     </script>
     <footer style="
     text-align: center;
@@ -2683,7 +2870,7 @@
     color: #666;
     font-size: 0.8rem;
 ">
-        <div>wmr? v3.4</div>
+        <div>wmr? v3.5</div>
         <div style="margin-top: 5px;">
             <a href="https://github.com/alfaoz" target="_blank" id="githubLink" style="
             color: #888;
