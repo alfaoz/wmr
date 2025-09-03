@@ -2503,7 +2503,7 @@
                                 console.error('Error loading keywords:', e);
                             }
                         } else {
-                            document.getElementById('keywordsInput').value = 'exam, test, midterm, final, quiz, assessment';
+                            document.getElementById('keywordsInput').value = 'exam, test, midterm, final';
                         }
 
                         setTimeout(() => {
@@ -2573,7 +2573,7 @@
         document.getElementById('resetKeywordsButton').addEventListener('click', function() {
             // Reset to default keywords - FIXED
             deleteCookie('highlightKeywords');
-            document.getElementById('keywordsInput').value = '';
+            document.getElementById('keywordsInput').value = 'exam, test, midterm, final';
             showStatus('keywords reset to default. refreshing highlights...', 'success');
 
             // Refresh the display to apply default keywords
@@ -2601,11 +2601,11 @@
                     } catch (e) {
                         console.error('Error loading keywords:', e);
                         // Fallback to default
-                        document.getElementById('keywordsInput').value = 'exam, test, midterm, final, quiz, assessment';
+                        document.getElementById('keywordsInput').value = 'exam, test, midterm, final';
                     }
                 } else {
                     // Show default keywords
-                    document.getElementById('keywordsInput').value = 'exam, test, midterm, final, quiz, assessment';
+                    document.getElementById('keywordsInput').value = 'exam, test, midterm, final';
                 }
 
                 // Smoothly scroll to the settings section
@@ -2683,7 +2683,7 @@
     color: #666;
     font-size: 0.8rem;
 ">
-        <div>wmr? v3.3</div>
+        <div>wmr? v3.4</div>
         <div style="margin-top: 5px;">
             <a href="https://github.com/alfaoz" target="_blank" id="githubLink" style="
             color: #888;
