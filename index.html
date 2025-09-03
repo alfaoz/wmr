@@ -1188,7 +1188,7 @@
                         <button class="settings-mini-btn" id="resetTimeOffsetsButton" title="Reset Time Offsets">🔄</button>
                     </div>
                 </div>
-                <input type="text" id="timeOffsetKeywords" class="keywords-input compact" placeholder="lecture, seminar, class">
+                <input type="text" id="timeOffsetKeywords" class="keywords-input compact" placeholder="lecture, tutorial">
                 <div class="offset-controls">
                     <div class="offset-item">
                         <label>Start</label>
@@ -2861,6 +2861,38 @@
 
             return examKeywords.some(keyword => summary.includes(keyword));
         }
+
+        // Function to toggle pattern sections (collapsible functionality)
+        function togglePatternSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const header = document.querySelector(`h2[onclick*="${sectionId}"]`);
+
+            if (section && header) {
+                if (section.classList.contains('collapsed')) {
+                    section.classList.remove('collapsed');
+                    section.style.maxHeight = section.scrollHeight + 'px';
+                    header.classList.remove('collapsed');
+                } else {
+                    section.classList.add('collapsed');
+                    section.style.maxHeight = '0px';
+                    header.classList.add('collapsed');
+                }
+            }
+        }
+
+        // Function to toggle expand/collapse of event lists
+        function toggleExpand(groupId, button) {
+            const list = document.getElementById(groupId);
+            if (list) {
+                if (list.classList.contains('collapsed')) {
+                    list.classList.remove('collapsed');
+                    button.textContent = '[ collapse ]';
+                } else {
+                    list.classList.add('collapsed');
+                    button.textContent = '[ expand ]';
+                }
+            }
+        }
     </script>
     <footer style="
     text-align: center;
@@ -2870,7 +2902,7 @@
     color: #666;
     font-size: 0.8rem;
 ">
-        <div>wmr? v3.5</div>
+        <div>wmr? v3.6</div>
         <div style="margin-top: 5px;">
             <a href="https://github.com/alfaoz" target="_blank" id="githubLink" style="
             color: #888;
