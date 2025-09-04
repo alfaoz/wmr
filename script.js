@@ -1,15 +1,21 @@
-    // Global variables for auto-refresh functionality
-    let autoRefreshInterval = null;
-    let lastCalendarHash = '';
-    let currentPatterns = null;
-    let timeUpdateInterval = null;
-    let showNoChangesNotification = false; // Track whether to show "no changes" notifications
+// Global variables for auto-refresh functionality
+let autoRefreshInterval = null;
+let lastCalendarHash = '';
+let currentPatterns = null;
+let timeUpdateInterval = null;
+let showNoChangesNotification = false; // Track whether to show "no changes" notifications
 
+// Wait for DOM to be ready before initializing
+document.addEventListener('DOMContentLoaded', function() {
     // Display current date
     const today = new Date();
-    document.getElementById('currentDate').textContent = `today: ${today.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+    const currentDateElement = document.getElementById('currentDate');
+    if (currentDateElement) {
+        currentDateElement.textContent = `today: ${today.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+    }
+});
 
-    // Simple ICS parser
+// Simple ICS parser
     function parseICS(icsContent) {
     const events = [];
     const lines = icsContent.split(/\r?\n/);
