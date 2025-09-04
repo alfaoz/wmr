@@ -8,6 +8,8 @@ features:
 
 happy rooster's!
 
+check it out: https://wmyr.app
+
 ---
 issues / suggestions? please create an issue over at https://github.com/alfaoz/wmr/issues/ , thanks!
 
