@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (currentDateElement) {
         currentDateElement.textContent = `today: ${today.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
     }
+    
+    // Initialize day change detection
+    if (typeof setupDayChangeDetection === 'function') {
+        setupDayChangeDetection();
+    }
 });
 
 // Simple ICS parser
@@ -1627,57 +1632,4 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
     return offsetEvent;
-}
-
-    // Function to format event time with offset applied
-    function formatEventTimeWithOffset(event) {
-    const offsetEvent = applyTimeOffset(event);
-    if (!offsetEvent.start) return '';
-
-    const startTime = offsetEvent.start.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
-    const endTime = offsetEvent.end ? offsetEvent.end.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false }) : '';
-
-    return endTime ? `${startTime} - ${endTime}` : startTime;
-}
-
-    // Function to determine if an event is an exam
-    function isExamEvent(event) {
-    if (!event || !event.summary) return false;
-
-    const summary = event.summary.toLowerCase();
-    const examKeywords = ['exam', 'test', 'quiz', 'midterm', 'final', 'assessment', 'examination'];
-
-    return examKeywords.some(keyword => summary.includes(keyword));
-}
-
-    // Function to toggle pattern sections (collapsible functionality)
-    function togglePatternSection(sectionId) {
-    const section = document.getElementById(sectionId);
-    const header = document.querySelector(`h2[onclick*="${sectionId}"]`);
-
-    if (section && header) {
-    if (section.classList.contains('collapsed')) {
-    section.classList.remove('collapsed');
-    section.style.maxHeight = section.scrollHeight + 'px';
-    header.classList.remove('collapsed');
-} else {
-    section.classList.add('collapsed');
-    section.style.maxHeight = '0px';
-    header.classList.add('collapsed');
-}
-}
-}
-
-    // Function to toggle expand/collapse of event lists
-    function toggleExpand(groupId, button) {
-    const list = document.getElementById(groupId);
-    if (list) {
-    if (list.classList.contains('collapsed')) {
-    list.classList.remove('collapsed');
-    button.textContent = '[ collapse ]';
-} else {
-    list.classList.add('collapsed');
-    button.textContent = '[ expand ]';
-}
-}
 }
