@@ -14,25 +14,7 @@ function formatEventTimeWithOffset(event) {
         timeStr = `${startTimeStr}-${endTimeStr}`;
     }
 
-    // Show if time was offset
-    if (shouldApplyTimeOffset(event)) {
-        const settings = getTimeOffsetSettings();
-        if (settings.startOffset !== 0 || settings.endOffset !== 0) {
-            const offsetParts = [];
-            if (settings.startOffset !== 0) {
-                const offsetStr = settings.startOffset > 0 ? `+${settings.startOffset}` : `${settings.startOffset}`;
-                offsetParts.push(`start${offsetStr}m`);
-            }
-            if (settings.endOffset !== 0 && event.end) {
-                const offsetStr = settings.endOffset > 0 ? `+${settings.endOffset}` : `${settings.endOffset}`;
-                offsetParts.push(`end${offsetStr}m`);
-            }
-            if (offsetParts.length > 0) {
-                return `${timeStr} (${offsetParts.join(', ')})`;
-            }
-        }
-    }
-
+    // Just return the calculated time without offset indicators
     return timeStr;
 }
 
