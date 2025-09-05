@@ -21,14 +21,14 @@ function formatEventTimeWithOffset(event) {
             const offsetParts = [];
             if (settings.startOffset !== 0) {
                 const offsetStr = settings.startOffset > 0 ? `+${settings.startOffset}` : `${settings.startOffset}`;
-                offsetParts.push(`start${offsetStr}m`);
+                offsetParts.push(`${offsetStr}m`);
             }
             if (settings.endOffset !== 0 && event.end) {
                 const offsetStr = settings.endOffset > 0 ? `+${settings.endOffset}` : `${settings.endOffset}`;
-                offsetParts.push(`end${offsetStr}m`);
+                offsetParts.push(`${offsetStr}m`);
             }
             if (offsetParts.length > 0) {
-                return `${timeStr} (${offsetParts.join(', ')})`;
+                return `${timeStr} (${offsetParts.join(' ')})`;
             }
         }
     }
