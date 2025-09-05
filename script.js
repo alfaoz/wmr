@@ -615,8 +615,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function formatEventTime(event) {
     if (!event.start) return '';
-    const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-    return event.start.toLocaleTimeString('en-GB', options);
+    const options = { hour: '2-digit', minute: '2-digit', hour12: false };
+    const startTime = event.start.toLocaleTimeString('en-GB', options);
+    
+    // Show end time if available
+    if (event.end) {
+        const endTime = event.end.toLocaleTimeString('en-GB', options);
+        return `${startTime}-${endTime}`;
+    }
+    
+    return startTime;
 }
 
     function formatEventDate(event) {
